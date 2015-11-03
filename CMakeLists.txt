@@ -5,6 +5,9 @@ project(skills)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  krssg_ssl_msgs
+  navigation
+  ssl_common
   roscpp
   rospy
   std_msgs
@@ -80,9 +83,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES skills
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+ INCLUDE_DIRS include
+ LIBRARIES skills
+ CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
 
@@ -161,3 +164,33 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+
+include_directories(include
+                    include/skills
+                    ${catkin_INCLUDE_DIRS}
+                    )
+
+
+# skills
+set(skillsSrc
+    src/sStop.cpp
+    src/sGoToPoint.cpp)
+# sources
+
+set(src 
+    ${skillsSrc}
+    src/skillSet.cpp)
+
+add_library(skills ${src})
+target_link_libraries(skills ${catkin_LIBRARIES})
+
+# for installilng the library so it can be used by other packages
+install(TARGETS skills
+        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION})
+
+# for installing the header files
+install(DIRECTORY include/${PROJECT_NAME}/
+        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION})
