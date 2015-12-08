@@ -30,17 +30,17 @@ namespace Strategy
     enum SkillID
     {
       // Spin,
-      // Kick,
+      Kick,
       Stop,
       // Dribble,
       // Velocity,
-      // GoToBall,
+      GoToBall,
       GoToPoint,
-      // DefendPoint,
-      // DribbleToPoint,
-      // KickToPoint,
+      DefendPoint,
+      DribbleToPoint,
+      KickToPoint,
       // ReceiveBall,
-      // TurnToPoint,
+      TurnToPoint,
       // TurnToAngle,
       MAX_SKILLS
     };
